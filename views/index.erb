@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="/screen.css" type="text/css" />
+  <script type="text/javascript" src="/jquery.js"></script>
+</head>
+<body>
+  <h1>Chat</h1>
+  <ul id=messages>
+  </ul>
+  <form>
+    <input type=text id='message'>
+    <input type=button value='say' onclick=postMessage();>
+  </form>
+
+  <script type='text/javascript'>
+    function postMessage(){
+      console.debug("hi");
+      var msg = $("#message").val();
+      console.debug({1: msg});
+      $.post('/say', {message: msg});
+      return false;
+    }
+    function pollMessage(){
+      $.get('/listen', function(message){
+        $("#messages").append("<li>"+message+"</li>"); //todo: escape
+        pollMessage();
+      });
+    }
+  </script>
+
+</body>
+</html>
+
